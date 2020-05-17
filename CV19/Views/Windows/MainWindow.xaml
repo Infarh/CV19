@@ -10,13 +10,48 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <Grid>
-        <TextBox Margin="36,30" 
-                 Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" 
-                 TextWrapping="Wrap"
-                 VerticalAlignment="Top"
-                 HorizontalAlignment="Left"
-                 Width="300"/>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Выход"/>
+            </MenuItem>
+            <MenuItem Header="Помощь">
+                <MenuItem Header="О программе"/>
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem MinWidth="150" MaxWidth="350">
+                <TextBlock Text="1243"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <ProgressBar Width="120" Height="14" Value="30"/>
+            </StatusBarItem>
+        </StatusBar>
+        <TabControl>
+            <TabItem Header="Вкладка 1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="63*" />
+                        <RowDefinition Height="325*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="157*"/>
+                        <ColumnDefinition Width="637*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Grid.Column="0" Grid.Row="0"
+                               Margin="5,7"
+                               Fill="Blue" Stroke="Red" 
+                               StrokeThickness="3" 
+                               RadiusX="5" RadiusY="7"/>
+                    <Ellipse Grid.Column="1" Grid.Row="0"
+                             Fill="Red" Stroke="Blue" StrokeThickness="3"/>
 
-    </Grid>
+                    <GridSplitter Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
+                                  HorizontalAlignment="Right"
+                                  Width="4"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Вкладка 2"></TabItem>
+        </TabControl>
+    </DockPanel>
 </Window>

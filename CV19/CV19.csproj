@@ -12,4 +12,8 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FontAwesome5" Version="2.0.5" />
+  </ItemGroup>
+
 </Project>

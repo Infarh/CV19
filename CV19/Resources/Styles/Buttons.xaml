@@ -1,0 +1,182 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:fa="http://schemas.fontawesome.com/icons/"
+                    >
+    <Style x:Key="BtnBase" TargetType="ButtonBase">
+        <Setter Property="Background" Value="White"/>
+    </Style>
+
+    <Style TargetType="Button" BasedOn="{StaticResource BtnBase}"/>
+    <Style TargetType="ToggleButton" BasedOn="{StaticResource BtnBase}"/>
+
+    <Style x:Key="PrimaryBtn" TargetType="Button" BasedOn="{StaticResource BtnBase}">
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
+    <Style x:Key="DangerBtn" TargetType="Button" BasedOn="{StaticResource BtnBase}">
+        <Setter Property="Background" Value="Red"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+    <Style x:Key="FocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="2" StrokeDashArray="1 2" SnapsToDevicePixels="true" StrokeThickness="1" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="CustomButtonTemplate" TargetType="{x:Type Button}">
+        <Border x:Name="border" CornerRadius="5"
+                                Background="{TemplateBinding Background}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                SnapsToDevicePixels="true">
+            <ContentPresenter x:Name="contentPresenter" 
+                                              Focusable="False" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}" 
+                                              RecognizesAccessKey="True" 
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsDefaulted" Value="true">
+                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="true">
+                <!--<Setter Property="Background" TargetName="border" Value="Blue"/>-->
+                <Setter Property="BorderBrush" TargetName="border" Value="White"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter Property="Background" TargetName="border" Value="DarkBlue"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <!--<Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>-->
+                <Setter Property="BorderBrush" TargetName="border" Value="DarkGray"/>
+                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="DarkGray"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <DropShadowEffect x:Key="ShadowDepth1" ShadowDepth="1"/>
+
+    <ControlTemplate x:Key="CheckButtonTemplate" TargetType="{x:Type Button}">
+        <Border x:Name="border" CornerRadius="5"
+                                Background="{TemplateBinding Background}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                SnapsToDevicePixels="true">
+            <DockPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                       Margin="{TemplateBinding Padding}">
+                <fa:ImageAwesome Height="12" Icon="Solid_Check" Foreground="LightGreen" Margin="0,0,3,0" Effect="{StaticResource ShadowDepth1}"/>
+                <ContentPresenter x:Name="contentPresenter" 
+                                  Focusable="False" 
+                                  RecognizesAccessKey="True" 
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+            </DockPanel>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsDefaulted" Value="true">
+                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" TargetName="border" Value="Blue"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="White"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter Property="Background" TargetName="border" Value="DarkBlue"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <!--<Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>-->
+                <Setter Property="BorderBrush" TargetName="border" Value="DarkGray"/>
+                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="DarkGray"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="RemoveButtonTemplate" TargetType="{x:Type Button}">
+        <Border x:Name="border" CornerRadius="5"
+                                Background="{TemplateBinding Background}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                SnapsToDevicePixels="true">
+            <DockPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                       Margin="{TemplateBinding Padding}">
+                <fa:ImageAwesome x:Name="Icon"
+                                 Height="12" 
+                                 Icon="Solid_Times" 
+                                 Foreground="#FFAEAE"
+                                 Margin="0,0,3,0" 
+                                 Effect="{StaticResource ShadowDepth1}"/>
+                <ContentPresenter x:Name="contentPresenter" 
+                                  Focusable="False" 
+                                  RecognizesAccessKey="True" 
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+            </DockPanel>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" TargetName="border" Value="White"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="Red"/>
+                <Setter Property="Foreground" Value="Red"/>
+                <Setter TargetName="Icon" Property="Foreground" Value="Red"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter Property="Background" TargetName="border" Value="WhiteSmoke"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="DarkRed"/>
+                <Setter Property="Foreground" Value="DarkRed"/>
+                <Setter TargetName="Icon" Property="Foreground" Value="OrangeRed"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <!--<Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>-->
+                <Setter Property="BorderBrush" TargetName="border" Value="DarkGray"/>
+                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="DarkGray"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="CustomButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template" Value="{StaticResource CustomButtonTemplate}"/>
+    </Style>
+
+    <Style x:Key="CheckButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template" Value="{StaticResource CheckButtonTemplate}"/>
+    </Style>
+
+    <Style x:Key="RemoveButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="Red"/>
+        <Setter Property="BorderBrush" Value="WhiteSmoke"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template" Value="{StaticResource RemoveButtonTemplate}"/>
+    </Style>
+</ResourceDictionary>

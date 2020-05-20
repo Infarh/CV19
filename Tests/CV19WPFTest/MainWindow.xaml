@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:CV19WPFTest"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        
+    </Window.Resources>
     <Grid>
         <Button Content="Button" Height="54" Margin="37,43,589,337" Width="174"/>
         <TextBox Height="27" Margin="277,56,321,351" Text="TextBox" TextWrapping="Wrap"/>

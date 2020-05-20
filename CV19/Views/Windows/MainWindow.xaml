@@ -63,13 +63,22 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <GroupBox Grid.Column="0" Header="Группы">
-                        <ListBox ItemsSource="{Binding Groups}" 
+                        <ListBox ItemsSource="{Binding Groups}" SelectedIndex="0"
                                  DisplayMemberPath="Name"
                                  SelectedItem="{Binding SelectedGroup}"/>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, FallbackValue='Студенты', TargetNullValue='Группа не выбрана'}">
-                        <DataGrid>
-
+                        <DataGrid ItemsSource="{Binding SelectedGroup.Students}" 
+                                  AutoGenerateColumns="False"
+                                  IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
+                                <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
+                                <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}"/>
+                                <DataGridTextColumn Header="Дата рождения" Binding="{Binding Birthday, StringFormat=dd.MM.yyyy}"/>
+                                <!--<DataGridTextColumn Header="Группа" Binding="{Binding DataContext.SelectedGroup.Name, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>-->
+                            </DataGrid.Columns>
                         </DataGrid>
                     </GroupBox>
                 </Grid>

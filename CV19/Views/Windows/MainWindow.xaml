@@ -21,7 +21,7 @@
     <Window.Resources>
         <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
 
-       
+
     </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -104,15 +104,8 @@
                     <GroupBox Grid.Column="0" Header="Группы">
                         <DockPanel>
                             <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
-                                <UniformGrid.Resources>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Margin" Value="3,0"/>
-                                        <Setter Property="Padding" Value="3,5"/>
-                                        <Setter Property="Background" Value="White"/>
-                                    </Style>
-                                </UniformGrid.Resources>
-                                <Button Content="Добавить" Style="{StaticResource PrimaryBtn}" Command="{Binding CreateGroupCommand}"/>
-                                <Button Content="Удалить" Style="{StaticResource DangerBtn}" Command="{Binding DeleteGroupCommand}" CommandParameter="{Binding SelectedGroup}"/>
+                                <Button Content="Добавить" Padding="0,7" Style="{StaticResource CheckButtonStyle}" Command="{Binding CreateGroupCommand}"/>
+                                <Button Content="Удалить" Padding="0,7" Style="{StaticResource RemoveButtonStyle}" Command="{Binding DeleteGroupCommand}" CommandParameter="{Binding SelectedGroup}"/>
                             </UniformGrid>
                             <ListBox ItemsSource="{Binding Groups}" SelectedIndex="0"
                                      SelectedItem="{Binding SelectedGroup}">
@@ -178,12 +171,55 @@
                 </oxy:Plot>
             </TabItem>
             <TabItem Header="Вкладка 2">
-                <Button VerticalAlignment="Top" HorizontalAlignment="Left" 
-                        Content="123" Margin="15,5" Padding="14,5"
-                        Style="{StaticResource DangerBtn}"/>
+                <Button Margin="20,40" VerticalAlignment="Top" HorizontalAlignment="Left" 
+                        Content="123" Padding="14,5" 
+                        Opacity="1"
+                        Style="{StaticResource CustomButtonStyle}"
+                        Width="110" RenderTransformOrigin="0.5,0.5">
+                    <Button.Background>
+                        <SolidColorBrush Color="White" x:Name="ButtonBrush"/>
+                    </Button.Background>
+                    <Button.RenderTransform>
+                        <RotateTransform x:Name="ButtonRotate"/>
+                    </Button.RenderTransform>
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="ButtonRotate"
+                                                     Storyboard.TargetProperty="Angle"
+                                                     From="0" To="360"
+                                                     Duration="0:0:0.5" 
+                                                     AutoReverse="True"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="ButtonBrush"
+                                                    Storyboard.TargetProperty="Color"
+                                                    Duration="0:0:0.1"
+                                                    To="Red"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="ButtonBrush"
+                                                    Storyboard.TargetProperty="Color"
+                                                    Duration="0:0:3"
+                                                    To="White"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
             </TabItem>
             <TabItem Header="Вкладка 3"></TabItem>
             <TabItem Header="Вкладка 4"></TabItem>
+            
         </TabControl>
     </DockPanel>
 </Window>

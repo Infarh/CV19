@@ -4,6 +4,20 @@
              xmlns:local="clr-namespace:CV19"
              StartupUri="Views/Windows/MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="BtnBase" TargetType="ButtonBase">
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
+        <Style TargetType="Button" BasedOn="{StaticResource BtnBase}"/>
+        <Style TargetType="ToggleButton" BasedOn="{StaticResource BtnBase}"/>
+
+        <Style x:Key="PrimaryBtn" TargetType="Button" BasedOn="{StaticResource BtnBase}">
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="DangerBtn" TargetType="Button" BasedOn="{StaticResource BtnBase}">
+            <Setter Property="Background" Value="Red"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
     </Application.Resources>
 </Application>

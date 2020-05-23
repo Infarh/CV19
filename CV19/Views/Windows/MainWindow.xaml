@@ -103,9 +103,9 @@
                                     <CollectionViewSource.SortDescriptions>
                                         <cm:SortDescription PropertyName="Name" Direction="Descending"/>
                                     </CollectionViewSource.SortDescriptions>
-                                    <CollectionViewSource.GroupDescriptions>
-                                        <PropertyGroupDescription PropertyName="Students.Count"/>
-                                    </CollectionViewSource.GroupDescriptions>
+                                    <!--<CollectionViewSource.GroupDescriptions>
+                                        <PropertyGroupDescription PropertyName="Name" />
+                                    </CollectionViewSource.GroupDescriptions>-->
                                 </CollectionViewSource>
                             </DockPanel.Resources>
                             <DockPanel DockPanel.Dock="Top" Margin="0,3">

@@ -175,6 +175,18 @@ namespace CV19.ViewModels
                    Surname = $"Фамилия {i}"
                });
 
+        public DirectoryViewModel DiskRootDir { get; } = new DirectoryViewModel("c:\\");
+
+        #region SelectedDirectory : DirectoryViewModel - Выбранная директория
+
+        /// <summary>Выбранная директория</summary>
+        private DirectoryViewModel _SelectedDirectory;
+
+        /// <summary>Выбранная директория</summary>
+        public DirectoryViewModel SelectedDirectory { get => _SelectedDirectory; set => Set(ref _SelectedDirectory, value); }
+
+        #endregion
+
         /* ---------------------------------------------------------------------------------------------------- */
 
         #region Команды
@@ -298,7 +310,6 @@ namespace CV19.ViewModels
             //_SelectedGroupStudents.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
             //_SelectedGroupStudents.GroupDescriptions.Add(new PropertyGroupDescription("Name"));
         }
-
 
 
         /* ---------------------------------------------------------------------------------------------------- */

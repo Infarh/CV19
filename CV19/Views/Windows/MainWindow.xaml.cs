@@ -2,6 +2,6 @@
 {
     public partial class MainWindow
     {
-        public MainWindow() => InitializeComponent(); asdasd
+        public MainWindow() => InitializeComponent();
     }
 }

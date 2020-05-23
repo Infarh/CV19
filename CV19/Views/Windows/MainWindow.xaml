@@ -52,7 +52,16 @@
                 <Grid>
                     <!--<TextBlock Text="{Binding Source={x:Static l:App.IsDesignMode}}"/>-->
                     <ListBox HorizontalAlignment="Left" Width="200" Margin="30"
-                             ItemsSource="{Binding TestStudents}">
+                             ItemsSource="{Binding TestStudents}"
+                             VirtualizingPanel.IsVirtualizing="True"
+                             VirtualizingPanel.VirtualizationMode="Recycling"
+                             VirtualizingPanel.IsContainerVirtualizable="True"
+                             >
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -63,7 +72,7 @@
                                 <Border BorderBrush="Blue" BorderThickness="1" CornerRadius="3"
                                         Padding="3">
                                     <Border.CacheMode>
-                                        <BitmapCache/>
+                                        <BitmapCache RenderAtScale="5" />
                                     </Border.CacheMode>
                                     <StackPanel>
                                         <TextBlock Text="{Binding Surname}" ToolTip="{Binding Name}"/>
@@ -136,8 +145,14 @@
                                       AutoGenerateColumns="False"
                                       GridLinesVisibility="Vertical"
                                       VerticalGridLinesBrush="DarkGray"
-                                      AlternatingRowBackground="LightGray">
+                                      AlternatingRowBackground="LightGray"
+                                      EnableRowVirtualization="True">
                                 <!-- HorizontalGridLinesBrush="{x:Null}" -->
+                                <!--<DataGrid.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel></VirtualizingStackPanel>
+                                    </ItemsPanelTemplate>
+                                </DataGrid.ItemsPanel>-->
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" Width="Auto"/>
                                     <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>

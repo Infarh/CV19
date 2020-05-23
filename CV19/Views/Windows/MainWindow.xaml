@@ -10,6 +10,7 @@
         xmlns:l="clr-namespace:CV19"
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+        xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         Title="{Binding Title}"
         Width="800" Height="450">
     <Window.InputBindings>
@@ -48,7 +49,7 @@
             <StatusBarItem Content="{Binding SelectedPageIndex}"/>
         </StatusBar>
         <TabControl SelectedIndex="{Binding SelectedPageIndex}">
-            <TabItem Header="Тестирование визуализации">
+            <TabItem Header="Тестирование визуализации" Visibility="Collapsed">
                 <Grid>
                     <!--<TextBlock Text="{Binding Source={x:Static l:App.IsDesignMode}}"/>-->
                     <ListBox HorizontalAlignment="Left" Width="200" Margin="30"
@@ -98,7 +99,14 @@
                             <DockPanel.Resources>
                                 <CollectionViewSource x:Key="GroupsCollection"
                                                       Source="{Binding Groups}"
-                                                      Filter="GroupsCollection_OnFilter"/>
+                                                      Filter="GroupsCollection_OnFilter">
+                                    <CollectionViewSource.SortDescriptions>
+                                        <cm:SortDescription PropertyName="Name" Direction="Descending"/>
+                                    </CollectionViewSource.SortDescriptions>
+                                    <CollectionViewSource.GroupDescriptions>
+                                        <PropertyGroupDescription PropertyName="Students.Count"/>
+                                    </CollectionViewSource.GroupDescriptions>
+                                </CollectionViewSource>
                             </DockPanel.Resources>
                             <DockPanel DockPanel.Dock="Top" Margin="0,3">
                                 <!--<TextBlock Text="Фильтр:"/>-->
@@ -139,9 +147,9 @@
                         <DockPanel>
                             <DockPanel DockPanel.Dock="Top" Margin="0,3">
                                 <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="3,0"/>
-                                <TextBox/>
+                                <TextBox Text="{Binding StudentFilterText, UpdateSourceTrigger=PropertyChanged}"/>
                             </DockPanel>
-                            <DataGrid ItemsSource="{Binding SelectedGroup.Students}" 
+                            <DataGrid ItemsSource="{Binding SelectedGroupStudents}" 
                                       AutoGenerateColumns="False"
                                       GridLinesVisibility="Vertical"
                                       VerticalGridLinesBrush="DarkGray"
@@ -153,6 +161,9 @@
                                         <VirtualizingStackPanel></VirtualizingStackPanel>
                                     </ItemsPanelTemplate>
                                 </DataGrid.ItemsPanel>-->
+                                <!--<DataGrid.GroupStyle>
+                                    <GroupStyle/>
+                                </DataGrid.GroupStyle>-->
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" Width="Auto"/>
                                     <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>

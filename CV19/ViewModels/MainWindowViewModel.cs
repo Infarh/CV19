@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using CV19.Infrastructure.Commands;
-using CV19.Models;
 using CV19.Models.Decanat;
 using CV19.ViewModels.Base;
+using OxyPlot;
+using DataPoint = CV19.Models.DataPoint;
 
 namespace CV19.ViewModels
 {
@@ -39,20 +42,77 @@ namespace CV19.ViewModels
         public Group SelectedGroup
         {
             get => _SelectedGroup;
-            set => Set(ref _SelectedGroup, value);
+            set
+            {
+                if (!Set(ref _SelectedGroup, value)) return;
+
+                _SelectedGroupStudents.Source = value?.Students;
+                OnPropertyChanged(nameof(SelectedGroupStudents));
+            }
         }
+
+        #endregion
+
+        #region StudentFilterText : string - Текст фильтра студентов
+
+        /// <summary>Текст фильтра студентов</summary>
+        private string _StudentFilterText;
+
+        /// <summary>Текст фильтра студентов</summary>
+        public string StudentFilterText
+        {
+            get => _StudentFilterText;
+            set
+            {
+                if (!Set(ref _StudentFilterText, value)) return;
+                _SelectedGroupStudents.View.Refresh();
+            }
+        }
+
+        #endregion
+
+        #region SelectedGroupStudents
+
+        private readonly CollectionViewSource _SelectedGroupStudents = new CollectionViewSource();
+
+        private void OnStudentFiltred(object Sender, FilterEventArgs E)
+        {
+            if (!(E.Item is Student student))
+            {
+                E.Accepted = false;
+                return;
+            }
+
+            var filter_text = _StudentFilterText;
+            if (string.IsNullOrWhiteSpace(filter_text))
+                return;
+
+            if (student.Name is null || student.Surname is null || student.Patronymic is null)
+            {
+                E.Accepted = false;
+                return;
+            }
+
+            if(student.Name.Contains(filter_text, StringComparison.OrdinalIgnoreCase)) return;
+            if(student.Surname.Contains(filter_text, StringComparison.OrdinalIgnoreCase)) return;
+            if(student.Patronymic.Contains(filter_text, StringComparison.OrdinalIgnoreCase)) return;
+
+            E.Accepted = false;
+        }
+
+        public ICollectionView SelectedGroupStudents => _SelectedGroupStudents?.View;
 
         #endregion
 
         #region SelectedPageIndex : int - Номер выбранной вкладки
 
         /// <summary>Номер выбранной вкладки</summary>
-        private int _SelectedPageIndex;
+        private int _SelectedPageIndex = 1;
 
         /// <summary>Номер выбранной вкладки</summary>
         public int SelectedPageIndex
         {
-            get => _SelectedPageIndex; 
+            get => _SelectedPageIndex;
             set => Set(ref _SelectedPageIndex, value);
         }
 
@@ -107,13 +167,13 @@ namespace CV19.ViewModels
 
         #endregion
 
-        public IEnumerable<Student> TestStudents => 
+        public IEnumerable<Student> TestStudents =>
             Enumerable.Range(1, App.IsDesignMode ? 10 : 100_000)
                .Select(i => new Student
-                {
-                    Name = $"Имя {i}",
-                    Surname = $"Фамилия {i}"
-                });
+               {
+                   Name = $"Имя {i}",
+                   Surname = $"Фамилия {i}"
+               });
 
         /* ---------------------------------------------------------------------------------------------------- */
 
@@ -142,7 +202,7 @@ namespace CV19.ViewModels
         {
             if (p is null) return;
             SelectedPageIndex += Convert.ToInt32(p);
-        } 
+        }
 
         #endregion
 
@@ -175,7 +235,7 @@ namespace CV19.ViewModels
             Groups.Remove(group);
             if (group_index < Groups.Count)
                 SelectedGroup = Groups[group_index];
-        } 
+        }
 
         #endregion
 
@@ -232,7 +292,14 @@ namespace CV19.ViewModels
             data_list.Add(group.Students[0]);
 
             CompositeCollection = data_list.ToArray();
+
+            _SelectedGroupStudents.Filter += OnStudentFiltred;
+
+            //_SelectedGroupStudents.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
+            //_SelectedGroupStudents.GroupDescriptions.Add(new PropertyGroupDescription("Name"));
         }
+
+
 
         /* ---------------------------------------------------------------------------------------------------- */
 

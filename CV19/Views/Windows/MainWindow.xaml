@@ -223,26 +223,29 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>-->
-                        <TreeView ItemsSource="{Binding DiskRootDir.DirectoryItems}">
-                            <TreeView.ItemTemplate>
-                                <!--<DataTemplate DataType="vm:DirectoryViewModel">
-                                    <TextBlock Text="{Binding Name}" ToolTip="{Binding CreationTime}"/>
-                                </DataTemplate>-->
-                                <HierarchicalDataTemplate DataType="vm:DirectoryViewModel"
-                                                          ItemsSource="{Binding DirectoryItems}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <fa:ImageAwesome Height="12" Icon="Regular_Folder" Foreground="Yellow" Margin="0,0,3,0"/>
-                                        <TextBlock Text="{Binding Name}"/>
-                                    </StackPanel>
-                                </HierarchicalDataTemplate>
-                            </TreeView.ItemTemplate>
-                        </TreeView>
+                        <GroupBox.Resources>
+                            <HierarchicalDataTemplate DataType="{x:Type vm:DirectoryViewModel}"
+                                                      ItemsSource="{Binding DirectoryItems}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:ImageAwesome Height="12" Icon="Regular_Folder" Foreground="Yellow" Margin="0,0,3,0"/>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                            <DataTemplate DataType="{x:Type vm:FileViewModel}">
+                                <StackPanel Orientation="Horizontal" ToolTip="{Binding CreationTime}">
+                                    <fa:ImageAwesome Height="12" Icon="Regular_File" Foreground="Blue"/>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.Resources>
+
+                        <TreeView ItemsSource="{Binding DiskRootDir.DirectoryItems}"/>
                     </GroupBox>
-                    <GroupBox Grid.Column="1" Header="Файлы">
+                    <!--<GroupBox Grid.Column="1" Header="Файлы">
                         <ListBox SelectedItem="{Binding SelectedDirectory.Files, Mode=OneWay}">
 
                         </ListBox>
-                    </GroupBox>
+                    </GroupBox>-->
                 </Grid>
             </TabItem>
         </TabControl>

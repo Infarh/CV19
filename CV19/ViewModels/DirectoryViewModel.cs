@@ -8,7 +8,7 @@ using CV19.ViewModels.Base;
 
 namespace CV19.ViewModels
 {
-    class DirectoryViewModel : ViewModel
+    internal class DirectoryViewModel : ViewModel
     {
         private readonly DirectoryInfo _DirectoryInfo;
 
@@ -76,7 +76,7 @@ namespace CV19.ViewModels
         public DirectoryViewModel(string Path) => _DirectoryInfo = new DirectoryInfo(Path);
     }
 
-    class FileViewModel : ViewModel
+    internal class FileViewModel : ViewModel
     {
         private FileInfo _FileInfo;
 

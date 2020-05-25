@@ -74,7 +74,11 @@ namespace CV19.ViewModels
         #region SelectedGroupStudents
 
         private readonly CollectionViewSource _SelectedGroupStudents = new CollectionViewSource();
-
+        /// <summary>
+        /// Команда фильтрация студентов
+        /// </summary>
+        /// <param name="Sender"></param>
+        /// <param name="E"></param>
         private void OnStudentFiltred(object Sender, FilterEventArgs E)
         {
             if (!(E.Item is Student student))
@@ -99,7 +103,9 @@ namespace CV19.ViewModels
 
             E.Accepted = false;
         }
-
+        /// <summary>
+        /// Выбранная группа студентов
+        /// </summary>
         public ICollectionView SelectedGroupStudents => _SelectedGroupStudents?.View;
 
         #endregion
@@ -166,7 +172,9 @@ namespace CV19.ViewModels
         }
 
         #endregion
-
+        /// <summary>
+        /// Муляж студентов
+        /// </summary>
         public IEnumerable<Student> TestStudents =>
             Enumerable.Range(1, App.IsDesignMode ? 10 : 100_000)
                .Select(i => new Student
@@ -174,7 +182,9 @@ namespace CV19.ViewModels
                    Name = $"Имя {i}",
                    Surname = $"Фамилия {i}"
                });
-
+        /// <summary>
+        /// Корневой каталог
+        /// </summary>
         public DirectoryViewModel DiskRootDir { get; } = new DirectoryViewModel("c:\\");
 
         #region SelectedDirectory : DirectoryViewModel - Выбранная директория
@@ -218,6 +228,8 @@ namespace CV19.ViewModels
 
         #endregion
 
+        #region CreateGroupCommand
+
         public ICommand CreateGroupCommand { get; }
 
         private bool CanCreateGroupCommandExecute(object p) => true;
@@ -233,6 +245,8 @@ namespace CV19.ViewModels
 
             Groups.Add(new_group);
         }
+
+        #endregion
 
         #region DeleteGroupCommand
 

@@ -1,57 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Markup;
 using CV19.Infrastructure.Commands;
 using CV19.Models.Decanat;
 using CV19.ViewModels.Base;
-using OxyPlot;
 using DataPoint = CV19.Models.DataPoint;
 
 namespace CV19.ViewModels
 {
+    [MarkupExtensionReturnType(typeof(MainWindowViewModel))]
     internal class MainWindowViewModel : ViewModel
     {
         /* ---------------------------------------------------------------------------------------------------- */
 
-        public ObservableCollection<Group> Groups { get; }
-
-        public object[] CompositeCollection { get; }
-
-        #region SelectedCompositeValue : object - Выбранный непонятный элемент
-
-        /// <summary>Выбранный непонятный элемент</summary>
-        private object _SelectedCompositeValue;
-
-        /// <summary>Выбранный непонятный элемент</summary>
-        public object SelectedCompositeValue { get => _SelectedCompositeValue; set => Set(ref _SelectedCompositeValue, value); }
-
-        #endregion
-
-        #region SelectedGroup : Group - Выбранная группа
-
-        /// <summary>Выбранная группа</summary>
-        private Group _SelectedGroup;
-
-        /// <summary>Выбранная группа</summary>
-        public Group SelectedGroup
-        {
-            get => _SelectedGroup;
-            set
-            {
-                if (!Set(ref _SelectedGroup, value)) return;
-
-                _SelectedGroupStudents.Source = value?.Students;
-                OnPropertyChanged(nameof(SelectedGroupStudents));
-            }
-        }
-
-        #endregion
+        public CountriesStatisticViewModel CountriesStatistic { get; }
 
         #region StudentFilterText : string - Текст фильтра студентов
 
@@ -175,18 +142,6 @@ namespace CV19.ViewModels
                    Surname = $"Фамилия {i}"
                });
 
-        public DirectoryViewModel DiskRootDir { get; } = new DirectoryViewModel("c:\\");
-
-        #region SelectedDirectory : DirectoryViewModel - Выбранная директория
-
-        /// <summary>Выбранная директория</summary>
-        private DirectoryViewModel _SelectedDirectory;
-
-        /// <summary>Выбранная директория</summary>
-        public DirectoryViewModel SelectedDirectory { get => _SelectedDirectory; set => Set(ref _SelectedDirectory, value); }
-
-        #endregion
-
         /* ---------------------------------------------------------------------------------------------------- */
 
         #region Команды
@@ -199,7 +154,8 @@ namespace CV19.ViewModels
 
         private void OnCloseApplicationCommandExecuted(object p)
         {
-            Application.Current.Shutdown();
+            (RootObject as Window)?.Close();
+            //Application.Current.Shutdown();
         }
 
         #endregion
@@ -218,51 +174,18 @@ namespace CV19.ViewModels
 
         #endregion
 
-        public ICommand CreateGroupCommand { get; }
-
-        private bool CanCreateGroupCommandExecute(object p) => true;
-
-        private void OnCreateGroupCommandExecuted(object p)
-        {
-            var group_max_index = Groups.Count + 1;
-            var new_group = new Group
-            {
-                Name = $"Группа {group_max_index}",
-                Students = new ObservableCollection<Student>()
-            };
-
-            Groups.Add(new_group);
-        }
-
-        #region DeleteGroupCommand
-
-        public ICommand DeleteGroupCommand { get; }
-
-        private bool CanDeleteGroupCommandExecuted(object p) => p is Group group && Groups.Contains(group);
-
-        private void OnDeleteGroupCommandExecuted(object p)
-        {
-            if (!(p is Group group)) return;
-            var group_index = Groups.IndexOf(group);
-            Groups.Remove(group);
-            if (group_index < Groups.Count)
-                SelectedGroup = Groups[group_index];
-        }
-
-        #endregion
-
         #endregion
 
         /* ---------------------------------------------------------------------------------------------------- */
 
         public MainWindowViewModel()
         {
+            CountriesStatistic = new CountriesStatisticViewModel(this);
+
             #region Команды
 
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
             ChangeTabIndexCommand = new LambdaCommand(OnChangeTabIndexCommandExecuted, CanChangeTabIndexCommandExecute);
-            CreateGroupCommand = new LambdaCommand(OnCreateGroupCommandExecuted, CanCreateGroupCommandExecute);
-            DeleteGroupCommand = new LambdaCommand(OnDeleteGroupCommandExecuted, CanDeleteGroupCommandExecuted);
 
             #endregion
 
@@ -276,39 +199,6 @@ namespace CV19.ViewModels
             }
 
             TestDataPoints = data_points;
-
-            var student_index = 1;
-            var students = Enumerable.Range(1, 10).Select(i => new Student
-            {
-                Name = $"Name {student_index}",
-                Surname = $"Surname {student_index}",
-                Patronymic = $"Patronymic {student_index++}",
-                Birthday = DateTime.Now,
-                Rating = 0
-            });
-
-            var groups = Enumerable.Range(1, 20).Select(i => new Group
-            {
-                Name = $"Группа {i}",
-                Students = new ObservableCollection<Student>(students)
-            });
-
-            Groups = new ObservableCollection<Group>(groups);
-
-            var data_list = new List<object>();
-
-            data_list.Add("Helo World!");
-            data_list.Add(42);
-            var group = Groups[1];
-            data_list.Add(group);
-            data_list.Add(group.Students[0]);
-
-            CompositeCollection = data_list.ToArray();
-
-            _SelectedGroupStudents.Filter += OnStudentFiltred;
-
-            //_SelectedGroupStudents.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
-            //_SelectedGroupStudents.GroupDescriptions.Add(new PropertyGroupDescription("Name"));
         }
 
 

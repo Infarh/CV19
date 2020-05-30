@@ -19,6 +19,10 @@ namespace CV19.ViewModels
     {
         /* ---------------------------------------------------------------------------------------------------- */
 
+        private readonly CountriesStatisticViewModel _CountriesStatistic;
+
+        /* ---------------------------------------------------------------------------------------------------- */
+
         #region StudentFilterText : string - Текст фильтра студентов
 
         /// <summary>Текст фильтра студентов</summary>
@@ -178,6 +182,8 @@ namespace CV19.ViewModels
 
         public MainWindowViewModel()
         {
+            _CountriesStatistic = new CountriesStatisticViewModel(this);
+
             #region Команды
 
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);

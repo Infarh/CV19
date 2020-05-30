@@ -4,7 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:l="clr-namespace:CV19"
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:vm="clr-namespace:CV19.ViewModels"
+             xmlns:fa="http://schemas.fontawesome.com/icons/"
+             d:DataContext="{d:DesignInstance vm:CountriesStatisticViewModel, d:IsDesignTimeCreatable=True}"
+             d:DesignWidth="800" d:DesignHeight="450">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="230"/>
@@ -12,7 +15,15 @@
         </Grid.ColumnDefinitions>
         <GridSplitter Panel.ZIndex="1000"/>
         <GroupBox Grid.Column="0" Header="Список стран">
-            <ListBox/>
+            <DockPanel>
+                <Button DockPanel.Dock="Top" Command="{Binding RefreshDataCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Height="12" Icon="Solid_ArrowDown" Margin="0,0,3,0"/>
+                        <TextBlock Text="Загрузить данные"/>
+                    </StackPanel>
+                </Button>
+                <ListBox ItemsSource="{Binding Countries}"/>
+            </DockPanel>
         </GroupBox>
         <GroupBox Grid.Column="1" Header="Информация">
             <Grid>

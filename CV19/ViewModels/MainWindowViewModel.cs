@@ -19,9 +19,7 @@ namespace CV19.ViewModels
     {
         /* ---------------------------------------------------------------------------------------------------- */
 
-        private readonly CountriesStatisticViewModel _CountriesStatistic;
-
-        /* ---------------------------------------------------------------------------------------------------- */
+        public CountriesStatisticViewModel CountriesStatistic { get; }
 
         #region StudentFilterText : string - Текст фильтра студентов
 
@@ -182,7 +180,7 @@ namespace CV19.ViewModels
 
         public MainWindowViewModel()
         {
-            _CountriesStatistic = new CountriesStatisticViewModel(this);
+            CountriesStatistic = new CountriesStatisticViewModel(this);
 
             #region Команды
 

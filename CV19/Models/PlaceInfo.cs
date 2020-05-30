@@ -10,5 +10,7 @@ namespace CV19.Models
         public Point Location { get; set; }
 
         public IEnumerable<ConfirmedCount> Counts { get; set; }
+
+        public override string ToString() => $"{Name}({Location})";
     }
 }

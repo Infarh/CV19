@@ -8,6 +8,7 @@
              xmlns:fa="http://schemas.fontawesome.com/icons/"
              xmlns:c="clr-namespace:CV19.Infrastructure.Converters"
              xmlns:m="clr-namespace:CV19.Models"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
              d:DataContext="{d:DesignInstance vm:CountriesStatisticViewModel, d:IsDesignTimeCreatable=True}"
              d:DesignWidth="800" d:DesignHeight="450">
     <UserControl.Resources>
@@ -51,8 +52,19 @@
         <GroupBox Grid.Column="1" Header="Информация">
             <Grid>
                 <Grid.Resources>
+                    <sys:Double x:Key="Value3">3</sys:Double>
+
                     <c:Ratio K="2" x:Key="Ratio2"/>
-                    <c:Linear K="5" B="3" x:Key="Linear_K5_B3"/>
+                    <c:Linear K="5" B="{StaticResource Value3}" x:Key="Linear_K5_B3"/>
+
+                    <c:CompositeConverter x:Key="TestConverter">
+                        <c:CompositeConverter.First>
+                            <c:Linear K="5"/>
+                        </c:CompositeConverter.First>
+                        <c:CompositeConverter.Second>
+                            <c:Linear K="-3" B="10"/>
+                        </c:CompositeConverter.Second>
+                    </c:CompositeConverter>
                 </Grid.Resources>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -63,7 +75,7 @@
                         ToolTip="{Binding Value, RelativeSource={RelativeSource Self}}"/>
                 <TextBox Grid.Row="0" Margin="0,30,0,0" 
                          VerticalAlignment="Top" HorizontalAlignment="Left" Width="200"
-                           Text="{Binding Value, ElementName=ValueSlider, Converter={StaticResource Ratio2}, UpdateSourceTrigger=PropertyChanged}"/>
+                           Text="{Binding Value, ElementName=ValueSlider, Converter={StaticResource TestConverter}, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </GroupBox>
     </Grid>

@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using CV19.Infrastructure.Commands;
 using CV19.Models;
 using CV19.Services;
+using CV19.Services.Interfaces;
 using CV19.ViewModels.Base;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CV19.ViewModels
 {
     internal class CountriesStatisticViewModel : ViewModel
     {
-        private readonly DataService _DataService;
+        private readonly IDataService _DataService;
 
         public MainWindowViewModel MainModel { get; internal set; }
 
@@ -75,9 +78,20 @@ namespace CV19.ViewModels
         //       }).ToArray();
         //}
 
-        public CountriesStatisticViewModel(DataService DataService)
+        public CountriesStatisticViewModel(IDataService DataService)
         {
             _DataService = DataService;
+
+            //var data = App.Host.Services.GetRequiredService<IDataService>();
+
+            //var are_ref_equal = ReferenceEquals(DataService, data);
+
+            //using (var scope = App.Host.Services.CreateScope())
+            //{
+            //    var data2 = scope.ServiceProvider.GetRequiredService<IDataService>();
+            //    var are_ref_equal2 = ReferenceEquals(DataService, data2);
+            //    var are_ref_equal3 = ReferenceEquals(data, data2);
+            //}
 
             #region Команды
 

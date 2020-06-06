@@ -9,6 +9,7 @@ using System.Windows.Markup;
 using CV19.Infrastructure.Commands;
 using CV19.Models.Decanat;
 using CV19.ViewModels.Base;
+using Microsoft.Extensions.DependencyInjection;
 using DataPoint = CV19.Models.DataPoint;
 
 namespace CV19.ViewModels
@@ -178,9 +179,11 @@ namespace CV19.ViewModels
 
         /* ---------------------------------------------------------------------------------------------------- */
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(CountriesStatisticViewModel Statistic)
         {
-            CountriesStatistic = new CountriesStatisticViewModel(this);
+            CountriesStatistic = Statistic;
+            Statistic.MainModel = this;
+            //CountriesStatistic = new CountriesStatisticViewModel(this);
 
             #region Команды
 

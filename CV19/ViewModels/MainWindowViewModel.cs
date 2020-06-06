@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using CV19.Infrastructure.Commands;
 using CV19.Models.Decanat;
+using CV19.Services.Interfaces;
 using CV19.ViewModels.Base;
 using Microsoft.Extensions.DependencyInjection;
 using DataPoint = CV19.Models.DataPoint;
@@ -17,6 +18,8 @@ namespace CV19.ViewModels
     [MarkupExtensionReturnType(typeof(MainWindowViewModel))]
     internal class MainWindowViewModel : ViewModel
     {
+        private readonly IAsyncDataService _AsyncData;
+
         /* ---------------------------------------------------------------------------------------------------- */
 
         public CountriesStatisticViewModel CountriesStatistic { get; }
@@ -179,8 +182,9 @@ namespace CV19.ViewModels
 
         /* ---------------------------------------------------------------------------------------------------- */
 
-        public MainWindowViewModel(CountriesStatisticViewModel Statistic)
+        public MainWindowViewModel(CountriesStatisticViewModel Statistic, IAsyncDataService AsyncData)
         {
+            _AsyncData = AsyncData;
             CountriesStatistic = Statistic;
             Statistic.MainModel = this;
             //CountriesStatistic = new CountriesStatisticViewModel(this);

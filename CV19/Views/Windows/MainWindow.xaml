@@ -55,7 +55,18 @@
             </TabItem>
 
             <TabItem Header="Отладка">
-                <!--<TextBlock Text="{x:Static system:Environment.CurrentDirectory}"/>-->
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top" Margin="5,5,5,0">
+                        <UniformGrid DockPanel.Dock="Left" HorizontalAlignment="Left" Rows="1" >
+                            <Button Margin="5" Padding="20,5" Content="Запуск" Command="{Binding StartProcessCommand}"/>
+                            <Button Margin="5" Padding="20,5" Content="Остановка"/>
+                        </UniformGrid>
+                        <ProgressBar DockPanel.Dock="Top" Margin="10"/>
+                    </DockPanel>
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
+                               Text="{Binding DataValue}" 
+                               FontSize="30"/>
+                </DockPanel>
             </TabItem>
         </TabControl>
     </DockPanel>

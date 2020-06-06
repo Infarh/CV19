@@ -41,9 +41,9 @@ namespace CV19.ViewModels.Base
         private WeakReference _TargetRef;
         private WeakReference _RootRef;
 
-        public object TargetObject => _TargetRef.Target;
+        public object TargetObject => _TargetRef?.Target;
 
-        public object RootObject => _RootRef.Target;
+        public object RootObject => _RootRef?.Target;
 
         protected virtual void OnInitialized(object Target, object Property, object Root)
         {

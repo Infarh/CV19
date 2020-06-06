@@ -12,6 +12,7 @@
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime.Extensions"
         Title="{Binding Title}"
         DataContext="{vm:MainWindowViewModel}"
         Width="800" Height="450">
@@ -53,124 +54,8 @@
                 <view:CountriesStatisticView DataContext="{Binding CountriesStatistic}"/>
             </TabItem>
 
-            <TabItem Header="Студенты">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <!--<ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="7*"/>-->
-                        <ColumnDefinition Width="250"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <GroupBox Grid.Column="0" Header="Группы">
-                        <DockPanel>
-                            <DockPanel.Resources>
-                                <CollectionViewSource x:Key="GroupsCollection"
-                                                      Filter="GroupsCollection_OnFilter">
-                                    <CollectionViewSource.SortDescriptions>
-                                        <cm:SortDescription PropertyName="Name" Direction="Descending"/>
-                                    </CollectionViewSource.SortDescriptions>
-                                    <!--<CollectionViewSource.GroupDescriptions>
-                                        <PropertyGroupDescription PropertyName="Name" />
-                                    </CollectionViewSource.GroupDescriptions>-->
-                                </CollectionViewSource>
-                            </DockPanel.Resources>
-                            <DockPanel DockPanel.Dock="Top" Margin="0,3">
-                                <!--<TextBlock Text="Фильтр:"/>-->
-                                <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="3,0"/>
-                                <TextBox Name="GroupNameFilterText" TextChanged="OnGroupsFilterTextChanged"/>
-                            </DockPanel>
-                            <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
-                                <Button Content="Добавить" Padding="0,7" Style="{StaticResource CheckButtonStyle}" />
-                                <Button Content="Удалить" Padding="0,7" Style="{StaticResource RemoveButtonStyle}" />
-                            </UniformGrid>
-                            <ListBox ItemsSource="{Binding Source={StaticResource GroupsCollection}}" SelectedIndex="0"
-                                     VirtualizingPanel.IsContainerVirtualizable="True"
-                                     VirtualizingPanel.IsVirtualizing="True"
-                                     VirtualizingPanel.VirtualizationMode="Recycling">
-                                <ListBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel />
-                                    </ItemsPanelTemplate>
-                                </ListBox.ItemsPanel>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate DataType="decanat:Group">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}" Name="TextView"/>
-                                            <TextBlock Text="{Binding Students.Count, StringFormat=[Студентов:{0}]}" Margin="3,0,0,0"/>
-                                        </StackPanel>
-                                        <DataTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding Students.Count}" Value="0">
-                                                <Setter TargetName="TextView" Property="Foreground" Value="Red"/>
-                                            </DataTrigger>
-                                        </DataTemplate.Triggers>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </DockPanel>
-                    </GroupBox>
-                    <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, FallbackValue='Студенты', TargetNullValue='Группа не выбрана'}">
-                        <DockPanel>
-                            <DockPanel DockPanel.Dock="Top" Margin="0,3">
-                                <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="3,0"/>
-                                <TextBox Text="{Binding StudentFilterText, UpdateSourceTrigger=PropertyChanged}"/>
-                            </DockPanel>
-                            <DataGrid ItemsSource="{Binding SelectedGroupStudents}" 
-                                      AutoGenerateColumns="False"
-                                      GridLinesVisibility="Vertical"
-                                      VerticalGridLinesBrush="DarkGray"
-                                      AlternatingRowBackground="LightGray"
-                                      EnableRowVirtualization="True">
-                                <!-- HorizontalGridLinesBrush="{x:Null}" -->
-                                <!--<DataGrid.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel></VirtualizingStackPanel>
-                                    </ItemsPanelTemplate>
-                                </DataGrid.ItemsPanel>-->
-                                <!--<DataGrid.GroupStyle>
-                                    <GroupStyle/>
-                                </DataGrid.GroupStyle>-->
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" Width="Auto"/>
-                                    <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
-                                    <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
-                                    <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}"/>
-                                    <!--<DataGridTextColumn Header="Дата рождения" Binding="{Binding Birthday, StringFormat=dd.MM.yyyy}"/>-->
-                                    <DataGridTemplateColumn Header="Дата рождения">
-                                        <!--<DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate DataType="decanat:Student">
-                                            <DatePicker SelectedDate="{Binding Birthday}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>-->
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate DataType="decanat:Student">
-                                                <TextBlock Text="{Binding Birthday, StringFormat='dd.MM.yyyy'}"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                        <DataGridTemplateColumn.CellEditingTemplate>
-                                            <DataTemplate DataType="decanat:Student">
-                                                <DatePicker SelectedDate="{Binding Birthday}"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellEditingTemplate>
-                                    </DataGridTemplateColumn>
-                                    <!--<DataGridTextColumn Header="Группа" Binding="{Binding DataContext.SelectedGroup.Name, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>-->
-                                    <DataGridTextColumn Header="Заметки" Binding="{Binding Description}" Width="*"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </DockPanel>
-                    </GroupBox>
-                </Grid>
-            </TabItem>
-            <TabItem Header="График" Visibility="Collapsed">
-                <oxy:Plot>
-                    <oxy:Plot.Axes>
-                        <oxy:LinearAxis Position="Left"/>
-                        <oxy:LinearAxis Position="Bottom"/>
-                    </oxy:Plot.Axes>
-                    <oxy:LineSeries Color="Red"
-                                    ItemsSource="{Binding TestDataPoints}"
-                                    DataFieldX="XValue"
-                                    DataFieldY="YValue"/>
-                </oxy:Plot>
+            <TabItem Header="Отладка">
+                <!--<TextBlock Text="{x:Static system:Environment.CurrentDirectory}"/>-->
             </TabItem>
         </TabControl>
     </DockPanel>

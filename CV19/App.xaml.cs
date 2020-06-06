@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
+using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Media;
 using CV19.Services;
 using CV19.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,5 +41,11 @@ namespace CV19
             services.AddSingleton<DataService>();
             services.AddSingleton<CountriesStatisticViewModel>();
         }
+
+        public static string CurrentDirectory => IsDesignMode 
+            ? Path.GetDirectoryName(GetSourceCodePath()) 
+            : Environment.CurrentDirectory;
+
+        private static string GetSourceCodePath([CallerFilePath] string Path = null) => Path;
     }
 }

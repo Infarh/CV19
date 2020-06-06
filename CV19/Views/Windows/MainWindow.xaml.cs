@@ -13,19 +13,19 @@ namespace CV19
             InitializeComponent();
         }
 
-        private void GroupsCollection_OnFilter(object Sender, FilterEventArgs E)
-        {
-            if(!(E.Item is Group group)) return;
-            if(group.Name is null) return;
+        //private void GroupsCollection_OnFilter(object Sender, FilterEventArgs E)
+        //{
+        //    if(!(E.Item is Group group)) return;
+        //    if(group.Name is null) return;
 
-            var filter_text = GroupNameFilterText.Text;
-            if(filter_text.Length == 0) return;
+        //    var filter_text = GroupNameFilterText.Text;
+        //    if(filter_text.Length == 0) return;
 
-            if(group.Name.Contains(filter_text, StringComparison.OrdinalIgnoreCase)) return;
-            if(group.Description != null && group.Description.Contains(filter_text, StringComparison.OrdinalIgnoreCase)) return;
+        //    if(group.Name.Contains(filter_text, StringComparison.OrdinalIgnoreCase)) return;
+        //    if(group.Description != null && group.Description.Contains(filter_text, StringComparison.OrdinalIgnoreCase)) return;
 
-            E.Accepted = false;
-        }
+        //    E.Accepted = false;
+        //}
 
         private void OnGroupsFilterTextChanged(object Sender, TextChangedEventArgs E)
         {

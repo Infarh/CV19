@@ -13,6 +13,7 @@
         xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:system="clr-namespace:System;assembly=System.Runtime.Extensions"
+        xmlns:components="clr-namespace:CV19.Components"
         Title="{Binding Title}"
         DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
         Width="800" Height="450">
@@ -55,7 +56,12 @@
             </TabItem>
 
             <TabItem Header="Отладка">
-                <!--<TextBlock Text="{x:Static system:Environment.CurrentDirectory}"/>-->
+                <Grid>
+                    <components:GaugeIndicator VerticalAlignment="Top" HorizontalAlignment="Left"
+                                               Width="80" Height="80" Value="{Binding FuelCount}"/>
+                    <Slider VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="90,0,0,0" Height="30"
+                            Minimum="0" Maximum="100" Value="{Binding FuelCount}"/>
+                </Grid>
             </TabItem>
         </TabControl>
     </DockPanel>

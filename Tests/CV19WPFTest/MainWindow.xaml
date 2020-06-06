@@ -1,21 +1,17 @@
 ﻿<Window x:Class="CV19WPFTest.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CV19WPFTest"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Window.Resources>
-        
-    </Window.Resources>
+        xmlns:l="clr-namespace:CV19WPFTest"
+        Title="MainWindow"
+        Width="354" Height="224">
     <Grid>
-        <Button Content="Button" Height="54" Margin="37,43,589,337" Width="174"/>
-        <TextBox Height="27" Margin="277,56,321,351" Text="TextBox" TextWrapping="Wrap"/>
-        <RadioButton Content="RadioButton" Height="20" Margin="248,114,425,300" Width="127"/>
-        <CheckBox Content="CheckBox" Height="26" Margin="441,117,212,291" Width="147"/>
-        <ProgressBar Height="27" Margin="127,180,471,227" Width="202"/>
-        <Slider Height="31" Margin="104,250,342,153"/>
+        <Button VerticalAlignment="Center" HorizontalAlignment="Center" 
+                Content="Start"
+                Padding="30,20"
+                Click="StartButton_Click"/>
 
+        <TextBlock Name="ResultBlock" HorizontalAlignment="Center" VerticalAlignment="Top" Text="None"/>
     </Grid>
 </Window>

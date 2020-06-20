@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using CV19.Services.Interfaces;
 using CV19.Web;
 
@@ -19,6 +20,7 @@ namespace CV19.Services
 
         private static void OnRequestReceived(object Sender, RequestReceiverEventArgs E)
         {
+            Thread.Sleep(3000);
             using var writer = new StreamWriter(E.Context.Response.OutputStream);
             writer.WriteLine("CV-19 Application - " + DateTime.Now);
         }

@@ -14,6 +14,9 @@ namespace CV19Console
 
         static void Main(string[] args)
         {
+            WebServerTest.Run();
+            return;
+
             //Thread.CurrentThread.Name = "Main theread";
 
             //var clock_thread = new Thread(ThreadMethod);

@@ -5,7 +5,7 @@ namespace CV19.Web
 {
     public class WebServer
     {
-        private event EventHandler<RequestReceiverEventArgs> RequestReceived;
+        public event EventHandler<RequestReceiverEventArgs> RequestReceived;
 
         //private TcpListener _Listener = new TcpListener(new IPEndPoint(IPAddress.Any, 8080));
         private HttpListener _Listener;
@@ -27,8 +27,8 @@ namespace CV19.Web
                 if (_Enabled) return;
 
                 _Listener = new HttpListener();
-                _Listener.Prefixes.Add($"http://*:{_Port}");
-                _Listener.Prefixes.Add($"http://+:{_Port}");
+                _Listener.Prefixes.Add($"http://*:{_Port}/"); // netsh http add urlacl url=http://*:8080/ user=user_name
+                _Listener.Prefixes.Add($"http://+:{_Port}/");
                 _Enabled = true;
                 ListenAsync();
             }

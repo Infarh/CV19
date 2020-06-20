@@ -11,9 +11,15 @@ namespace CV19.ViewModels
 
         #region Enabled
 
-        private bool _Enabled;
-
-        public bool Enabled { get => _Enabled; set => Set(ref _Enabled, value); }
+        public bool Enabled
+        {
+            get => _Server.Enabled;
+            set
+            {
+                _Server.Enabled = value;
+                OnPropertyChanged();
+            }
+        }
 
         #endregion
 
@@ -24,11 +30,12 @@ namespace CV19.ViewModels
         public ICommand StartCommand => _StartCommand
             ??= new LambdaCommand(OnStartCommandExecuted, CanStartCommandExecute);
 
-        private bool CanStartCommandExecute(object p) => !_Enabled;
+        private bool CanStartCommandExecute(object p) => !Enabled;
 
         private void OnStartCommandExecuted(object p)
         {
-            Enabled = true;
+            _Server.Start();
+            OnPropertyChanged(nameof(Enabled));
         }
 
         #endregion
@@ -40,11 +47,12 @@ namespace CV19.ViewModels
         public ICommand StopCommand => _StopCommand
             ??= new LambdaCommand(OnStopCommandExecuted, CanStopCommandExecute);
 
-        private bool CanStopCommandExecute(object p) => _Enabled;
+        private bool CanStopCommandExecute(object p) => Enabled;
 
         private void OnStopCommandExecuted(object p)
         {
-            Enabled = false;
+            _Server.Stop();
+            OnPropertyChanged(nameof(Enabled));
         }
 
         #endregion

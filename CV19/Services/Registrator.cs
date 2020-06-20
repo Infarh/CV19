@@ -12,6 +12,7 @@ namespace CV19.Services
             //services.AddScoped<IDataService, DataService>();
 
             services.AddTransient<IAsyncDataService, AsyncDataService>();
+            services.AddTransient<IWebServerService, HttpListenerWebSeverer>();
 
             return services;
         }

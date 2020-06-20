@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace CV19Console
@@ -27,9 +28,7 @@ namespace CV19Console
             //var timeout = 150;
 
             //new Thread(() => PrintMethod(msg, count, timeout)) { IsBackground = true }.Start();
-
-
-
+            
             //CheckThread();
 
             //for (var i = 0; i < 5; i++)
@@ -115,6 +114,7 @@ namespace CV19Console
             Console.ReadLine();
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private static void PrintMethod(string Message, int Count, int Timeout)
         {
             for (var i = 0; i < Count; i++)

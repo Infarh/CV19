@@ -8,16 +8,18 @@ namespace CV19Console
 {
     class Program
     {
+        private static bool __ThreadUpdate = true;
+
         static void Main(string[] args)
         {
             Thread.CurrentThread.Name = "Main theread";
 
-            //var thread = new Thread(ThreadMethod);
-            //thread.Name = "Other thread";
-            //thread.IsBackground = true;
-            //thread.Priority = ThreadPriority.AboveNormal;
+            var clock_thread = new Thread(ThreadMethod);
+            clock_thread.Name = "Other thread";
+            clock_thread.IsBackground = true;
+            clock_thread.Priority = ThreadPriority.AboveNormal;
 
-            //thread.Start(42);
+            clock_thread.Start(42);
 
             //var count = 5;
             //var msg = "Hello World!";
@@ -53,7 +55,7 @@ namespace CV19Console
             Monitor.Enter(lock_object);
             try
             {
-
+                
             }
             finally
             {
@@ -63,6 +65,12 @@ namespace CV19Console
             foreach (var thread in threads)
                 thread.Start();
 
+
+            if (!clock_thread.Join(100))
+            {
+                //clock_thread.Abort();     // Прерывает поток в любой точке процесса его выполнения
+                clock_thread.Interrupt();
+            }
 
             Console.ReadLine();
             Console.WriteLine(string.Join(",", values));
@@ -86,9 +94,10 @@ namespace CV19Console
 
             CheckThread();
 
-            while (true)
+            while (__ThreadUpdate)
             {
                 Thread.Sleep(100);
+                Thread.SpinWait(1000);
                 Console.Title = DateTime.Now.ToString();
             }
         }

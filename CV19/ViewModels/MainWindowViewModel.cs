@@ -25,6 +25,8 @@ namespace CV19.ViewModels
 
         public CountriesStatisticViewModel CountriesStatistic { get; }
 
+        public WebServerViewModel WebServer { get; }
+
         #region StudentFilterText : string - Текст фильтра студентов
 
         /// <summary>Текст фильтра студентов</summary>
@@ -230,10 +232,11 @@ namespace CV19.ViewModels
 
         /* ---------------------------------------------------------------------------------------------------- */
 
-        public MainWindowViewModel(CountriesStatisticViewModel Statistic, IAsyncDataService AsyncData)
+        public MainWindowViewModel(CountriesStatisticViewModel Statistic, IAsyncDataService AsyncData, WebServerViewModel WebServer)
         {
             _AsyncData = AsyncData;
             CountriesStatistic = Statistic;
+            this.WebServer = WebServer;
             Statistic.MainModel = this;
             //CountriesStatistic = new CountriesStatisticViewModel(this);
 

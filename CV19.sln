@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CV19Console", "Tests\CV19Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CV19WPFTest", "Tests\CV19WPFTest\CV19WPFTest.csproj", "{16133638-8F17-4B64-9815-7E6178544A1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CV19WinFormsTest", "Tests\CV19WinFormsTest\CV19WinFormsTest.csproj", "{8EB32BD1-1FAD-4FE5-BA31-D974CD1CAF9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CV19WinFormsTest", "Tests\CV19WinFormsTest\CV19WinFormsTest.csproj", "{8EB32BD1-1FAD-4FE5-BA31-D974CD1CAF9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CV19.Web", "CV19.Web\CV19.Web.csproj", "{16558D4A-3611-4D65-B6ED-97ED75DBCAC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{8EB32BD1-1FAD-4FE5-BA31-D974CD1CAF9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EB32BD1-1FAD-4FE5-BA31-D974CD1CAF9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EB32BD1-1FAD-4FE5-BA31-D974CD1CAF9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16558D4A-3611-4D65-B6ED-97ED75DBCAC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16558D4A-3611-4D65-B6ED-97ED75DBCAC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16558D4A-3611-4D65-B6ED-97ED75DBCAC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16558D4A-3611-4D65-B6ED-97ED75DBCAC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

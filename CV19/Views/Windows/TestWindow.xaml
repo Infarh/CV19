@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CV19"
         Style="{StaticResource CV19WindowStyle}"
+        Icon="../../Resources/WindowIcon.png"
         Title="TestWindow"
         Width="800" Height="450">
     <Grid>

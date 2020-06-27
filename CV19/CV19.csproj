@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\WindowIcon.ico" />
     <None Remove="Resources\WindowIcon.png" />
   </ItemGroup>
 
@@ -31,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\WindowIcon.ico" />
     <Resource Include="Resources\WindowIcon.png" />
   </ItemGroup>
 

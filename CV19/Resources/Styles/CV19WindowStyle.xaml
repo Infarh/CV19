@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:b="clr-namespace:CV19.Infrastructure.Behaviors">
-    
+
     <Style x:Key="CV19WindowHeaderButtonsStyle" TargetType="{x:Type Button}">
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -38,25 +38,32 @@
     <Geometry x:Key="CloseButtonIconGeometry">M0,0 L8,8 M0,8 L8,0</Geometry>
 
 
-<ControlTemplate x:Key="CV19WindowTemplate" TargetType="{x:Type Window}">
+    <ControlTemplate x:Key="CV19WindowTemplate" TargetType="{x:Type Window}">
         <Grid>
             <Border Name="PART_Border"
-                    Margin="7"
+                    Margin="10"
                     BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"/>
-            
+                    BorderThickness="{TemplateBinding BorderThickness}">
+                <Border.Effect>
+                    <BlurEffect Radius="{TemplateBinding BorderThickness}"/>
+                </Border.Effect>
+            </Border>
+
             <Grid x:Name="PART_MainGrid" 
-                  Margin="7"
+                  Margin="10"
                   Background="{TemplateBinding Background}"
                   TextOptions.TextRenderingMode="ClearType"
                   TextOptions.TextFormattingMode="Display">
+                <Grid.Effect>
+                    <DropShadowEffect Opacity="0.5" BlurRadius="7" ShadowDepth="4" Color="Blue"/>
+                </Grid.Effect>
                 <DockPanel>
                     <Grid Name="PART_TitleBar" DockPanel.Dock="Top" Background="WhiteSmoke">
                         <i:Interaction.Behaviors>
                             <b:WindowTitleBarBehavior/>
                         </i:Interaction.Behaviors>
                         <DockPanel Height="32">
-                            <Image Name="PART_Icon" DockPanel.Dock="Left" 
+                            <Image Name="PART_Icon" DockPanel.Dock="Left" Margin="7,-10,0,0" 
                                    Source="{TemplateBinding Icon}">
                                 <i:Interaction.Behaviors>
                                     <b:WindowSystemIconBehavior/>
@@ -214,6 +221,7 @@
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="AllowsTransparency" Value="True"/>
         <Setter Property="BorderThickness" Value="7"/>
+        <Setter Property="BorderBrush" Value="DarkBlue"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
         <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>

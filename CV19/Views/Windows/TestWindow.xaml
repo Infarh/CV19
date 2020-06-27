@@ -8,6 +8,10 @@
         Title="TestWindow"
         Width="800" Height="450">
     <Grid>
-        
+        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,40" Padding="20,5">Hello World!</Button>
+        <Canvas>
+            <Ellipse Canvas.Left="153" Canvas.Bottom="20" StrokeThickness="1" Stroke="Blue" Fill="Red"
+                     Width="30" Height="20" Canvas.Top="188"/>
+        </Canvas>
     </Grid>
 </Window>

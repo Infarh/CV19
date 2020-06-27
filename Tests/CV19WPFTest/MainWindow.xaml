@@ -3,15 +3,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:l="clr-namespace:CV19WPFTest"
+        xmlns:b="clr-namespace:CV19WPFTest.Behaviors"
         Title="MainWindow"
         Width="354" Height="224">
     <Grid>
         <Button VerticalAlignment="Center" HorizontalAlignment="Center" 
                 Content="Start"
                 Padding="30,20"
-                Click="StartButton_Click"/>
+                Click="StartButton_Click">
+            <i:Interaction.Behaviors>
+                <i:MouseDragElementBehavior/>
+            </i:Interaction.Behaviors>
+        </Button>
 
-        <TextBlock Name="ResultBlock" HorizontalAlignment="Center" VerticalAlignment="Top" Text="None"/>
+        <TextBlock Name="ResultBlock" HorizontalAlignment="Center" VerticalAlignment="Top" Text="None">
+            <i:Interaction.Behaviors>
+                <i:MouseDragElementBehavior/>
+            </i:Interaction.Behaviors>
+        </TextBlock>
+
+        <Canvas>
+            <Ellipse Canvas.Left="30" Canvas.Top="10" 
+                     Stroke="Red" StrokeThickness="2"
+                     Fill="DarkBlue"
+                     Width="20" Height="20">
+                <i:Interaction.Behaviors>
+                    <!--<i:MouseDragElementBehavior/>-->
+                    <b:DragInCanvas/>
+                </i:Interaction.Behaviors>
+            </Ellipse>
+        </Canvas>
     </Grid>
 </Window>

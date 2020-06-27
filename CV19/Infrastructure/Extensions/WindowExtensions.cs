@@ -10,6 +10,11 @@ namespace System.Windows
 
         [DllImport(user32, CharSet = CharSet.Auto)]
         private static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+        [DllImport(user32, CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
+
+        public static IntPtr SendMessage(this Window window, WM Msg, IntPtr wParam, IntPtr lParam) => 
+            SendMessage(window.GetWindowHandle(), Msg, wParam, lParam);
 
         public static IntPtr SendMessage(this Window window, WM Msg, SC wParam, IntPtr lParam = default)
         {

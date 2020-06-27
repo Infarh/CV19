@@ -12,6 +12,7 @@
 
                 <ResourceDictionary Source="Resources/Styles/Buttons.xaml"/>
                 <ResourceDictionary Source="Resources/Styles/GridSplitters.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/CV19WindowStyle.xaml"/>
 
            </ResourceDictionary.MergedDictionaries>
 

@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -10,6 +12,48 @@ namespace CV19WPFTest.Behaviors
     {
         private Point _StartPoint;
         private Canvas _Canvas;
+
+        #region PositionX : double - Горизонтальное смещение
+
+        /// <summary>Горизонтальное смещение</summary>
+        public static readonly DependencyProperty PositionXProperty =
+            DependencyProperty.Register(
+                nameof(PositionX),
+                typeof(double),
+                typeof(DragInCanvas),
+                new PropertyMetadata(default(double)));
+
+        /// <summary>Горизонтальное смещение</summary>
+        //[Category("")]
+        [Description("Горизонтальное смещение")]
+        public double PositionX
+        {
+            get => (double) GetValue(PositionXProperty); 
+            set => SetValue(PositionXProperty, value);
+        }
+
+        #endregion
+
+        #region PositionY : double - Вертикальное положение
+
+        /// <summary>Вертикальное положение</summary>
+        public static readonly DependencyProperty PositionYProperty =
+            DependencyProperty.Register(
+                nameof(PositionY),
+                typeof(double),
+                typeof(DragInCanvas),
+                new PropertyMetadata(default(double)));
+
+        /// <summary>Вертикальное положение</summary>
+        //[Category("")]
+        [Description("Вертикальное положение")]
+        public double PositionY
+        {
+            get => (double) GetValue(PositionYProperty);
+            set => SetValue(PositionYProperty, value);
+        }
+
+        #endregion
 
         protected override void OnAttached()
         {
@@ -60,6 +104,9 @@ namespace CV19WPFTest.Behaviors
 
             obj.SetValue(Canvas.LeftProperty, delta.X);
             obj.SetValue(Canvas.TopProperty, delta.Y);
+
+            PositionX = delta.X;
+            PositionY = delta.Y;
         }
     }
 }

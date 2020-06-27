@@ -1,0 +1,18 @@
+﻿<Window x:Class="CV19.TestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CV19"
+        Style="{StaticResource CV19WindowStyle}"
+        Icon="../../Resources/WindowIcon.ico"
+        Title="TestWindow"
+        Width="800" Height="450">
+    <Grid>
+        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,40" Padding="20,5">Hello World!</Button>
+        <Canvas>
+            <Ellipse Canvas.Left="153" Canvas.Bottom="20" StrokeThickness="1" Stroke="Blue" Fill="Red"
+                     Width="30" Height="20" Canvas.Top="188"/>
+        </Canvas>
+    </Grid>
+</Window>

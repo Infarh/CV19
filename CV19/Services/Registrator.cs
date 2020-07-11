@@ -14,6 +14,9 @@ namespace CV19.Services
             services.AddTransient<IAsyncDataService, AsyncDataService>();
             services.AddTransient<IWebServerService, HttpListenerWebSeverer>();
 
+            services.AddSingleton<StudentsRepository>();
+            services.AddSingleton<GroupsRepository>();
+
             return services;
         }
     }

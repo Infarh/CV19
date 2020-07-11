@@ -9,6 +9,8 @@ namespace CV19.Services
 {
     class WindowsUserDialogService : IUserDialogService
     {
+        private static Window ActiveWindow => Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
+
         public bool Edit(object item)
         {
             if (item is null) throw new ArgumentNullException(nameof(item));
@@ -35,6 +37,19 @@ namespace CV19.Services
                 Exclamation ? MessageBoxImage.Exclamation : MessageBoxImage.Question)
             == MessageBoxResult.Yes;
 
+        public string GetStringValue(string Message, string Caption, string DefaultValue = null)
+        {
+            var value_dialog = new StringValueDialogWindow
+            {
+                Message = Message,
+                Title = Caption,
+                Value = DefaultValue ?? string.Empty,
+                Owner = ActiveWindow
+            };
+
+            return value_dialog.ShowDialog() == true ? value_dialog.Value : DefaultValue;
+        }
+
         private static bool EditStudent(Student student)
         {
             var dlg = new StudentEditorWindow
@@ -44,7 +59,7 @@ namespace CV19.Services
                 Patronymic = student.Patronymic,
                 Rating = student.Rating,
                 Birthday = student.Birthday,
-                Owner = Application.Current.Windows.OfType<StudentsManagementWindow>().FirstOrDefault(),
+                Owner = ActiveWindow,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
             };
 

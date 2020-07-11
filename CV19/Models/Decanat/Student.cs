@@ -16,8 +16,6 @@ namespace CV19.Models.Decanat
         public double Rating { get; set; }
 
         public string Description { get; set; }
-
-
     }
 
     internal class Group

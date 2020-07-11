@@ -1,0 +1,73 @@
+﻿<Window x:Class="CV19.Views.Windows.StudentEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:l="clr-namespace:CV19.Views.Windows"
+        xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands"
+        Title="Редактирование студента"
+        Width="350" Height="234"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}" 
+        ResizeMode="NoResize" 
+        ShowInTaskbar="False">
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,7,0,0" 
+                   Text="Редактирование студента"
+                   FontWeight="Bold" FontSize="15"/>
+        <UniformGrid DockPanel.Dock="Bottom" Rows="1" HorizontalAlignment="Right" Margin="0,0,0,10">
+            <Button Content="Ok" Margin="10,0" Padding="35,5" IsDefault="True" FontWeight="Bold"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=l:StudentEditorWindow}}">
+                <Button.Command>
+                    <cmd:CloseDialogCommand DialogResult="True"/>
+                </Button.Command>
+            </Button>
+            <Button Content="Cancel" Margin="10,0" IsCancel="True"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=l:StudentEditorWindow}}">
+                <Button.Command>
+                    <cmd:CloseDialogCommand DialogResult="False"/>
+                </Button.Command>
+            </Button>
+        </UniformGrid>
+        <Grid Margin="3">
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <Trigger Property="Grid.Column" Value="0">
+                            <Setter Property="HorizontalAlignment" Value="Right"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Margin" Value="0,3"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="3,2,0,2"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Фамилия:"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Имя:"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Отчество:"/>
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="Рейтинг:"/>
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="Дата рождения:"/>
+
+            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding LastName}"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding FirstName}"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Patronymic}"/>
+            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Rating, StringFormat=0.##}"/>
+            <DatePicker Grid.Column="1" Grid.Row="4" Margin="3,2,0,2" SelectedDate="{Binding Birthday}"/>
+
+        </Grid>
+    </DockPanel>
+</Window>

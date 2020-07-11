@@ -37,15 +37,9 @@ namespace CV19
             __Host = null;
         }
 
-        public static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
-        {
-            services.AddSingleton<IDataService, DataService>();
-            //services.AddTransient<IDataService, DataService>();
-            //services.AddScoped<IDataService, DataService>();
-
-            services.AddSingleton<MainWindowViewModel>();
-            services.AddSingleton<CountriesStatisticViewModel>();
-        }
+        public static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
+               .RegisterServices()
+               .RegisterViewModels();
 
         public static string CurrentDirectory => IsDesignMode 
             ? Path.GetDirectoryName(GetSourceCodePath()) 

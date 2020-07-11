@@ -1,0 +1,275 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                    xmlns:b="clr-namespace:CV19.Infrastructure.Behaviors">
+
+    <Style x:Key="CV19WindowHeaderButtonsStyle" TargetType="{x:Type Button}">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Border x:Name="PART_Border" Background="Transparent"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}">
+                            <ContentPresenter/>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_Border" Property="Background" Value="LightSkyBlue"/>
+                            <Setter TargetName="PART_Border" Property="Opacity" Value="0.7"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_Border" Property="Background" Value="Blue"/>
+                            <Setter TargetName="PART_Border" Property="Opacity" Value="1"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Geometry x:Key="MinimizeButtonIconGeometry">M0,8 H8 M0,7 H8 M0,6 H8</Geometry>
+    <Geometry x:Key="MaximizeToMaxButtonIconGeometry">M0,0 H8 V8 H0 V0 M0,1 H8 M0,2 H8</Geometry>
+    <Geometry x:Key="MaximizeToMinButtonIconGeometry">M0,3 H5 V8 H0 V3 M0,4 H5 M3,0 H8 V5 H7 M3,1 H8</Geometry>
+    <Geometry x:Key="CloseButtonIconGeometry">M0,0 L8,8 M0,8 L8,0</Geometry>
+
+
+    <ControlTemplate x:Key="CV19WindowTemplate" TargetType="{x:Type Window}">
+        <Grid>
+            <Border Name="PART_Border"
+                    Margin="10"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+                <Border.Effect>
+                    <BlurEffect Radius="{TemplateBinding BorderThickness}"/>
+                </Border.Effect>
+            </Border>
+
+            <Grid x:Name="PART_MainGrid" 
+                  Margin="10"
+                  Background="{TemplateBinding Background}"
+                  TextOptions.TextRenderingMode="ClearType"
+                  TextOptions.TextFormattingMode="Display">
+                <Grid.Effect>
+                    <DropShadowEffect Opacity="0.5" BlurRadius="7" ShadowDepth="4" Color="Blue"/>
+                </Grid.Effect>
+                <DockPanel>
+                    <Grid Name="PART_TitleBar" DockPanel.Dock="Top" Background="WhiteSmoke">
+                        <i:Interaction.Behaviors>
+                            <b:WindowTitleBarBehavior/>
+                        </i:Interaction.Behaviors>
+                        <DockPanel Height="32">
+                            <Image Name="PART_Icon" DockPanel.Dock="Left" Margin="7,-10,0,0" 
+                                   Source="{TemplateBinding Icon}">
+                                <i:Interaction.Behaviors>
+                                    <b:WindowSystemIconBehavior/>
+                                </i:Interaction.Behaviors>
+                            </Image>
+
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CV19WindowHeaderButtonsStyle}"/>
+                                    <Style TargetType="{x:Type Path}">
+                                        <Setter Property="StrokeThickness" Value="2"/>
+                                        <Setter Property="Stroke" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                        <Setter Property="Margin" Value="10"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Button>
+                                    <i:Interaction.Behaviors>
+                                        <b:MinimizeWindow/>
+                                    </i:Interaction.Behaviors>
+                                    <Path Data="{StaticResource MinimizeButtonIconGeometry}">
+                                        <Path.CacheMode>
+                                            <BitmapCache SnapsToDevicePixels="True"/>
+                                        </Path.CacheMode>
+                                    </Path>
+                                </Button>
+                                <Button>
+                                    <i:Interaction.Behaviors>
+                                        <b:WindowStateChange/>
+                                    </i:Interaction.Behaviors>
+                                    <Path Data="{StaticResource MaximizeToMaxButtonIconGeometry}">
+                                        <Path.CacheMode>
+                                            <BitmapCache SnapsToDevicePixels="True"/>
+                                        </Path.CacheMode>
+                                    </Path>
+                                </Button>
+                                <Button Foreground="Red">
+                                    <i:Interaction.Behaviors>
+                                        <b:CloseWindow/>
+                                    </i:Interaction.Behaviors>
+                                    <Path Data="{StaticResource CloseButtonIconGeometry}">
+                                        <Path.CacheMode>
+                                            <BitmapCache SnapsToDevicePixels="True"/>
+                                        </Path.CacheMode>
+                                    </Path>
+                                </Button>
+                            </StackPanel>
+
+                            <TextBlock Name="PART_Title" 
+                                       Text="{TemplateBinding Title}"
+                                       FontSize="12"
+                                       FontFamily="Segoe UI"
+                                       Margin="4,0,0,0"
+                                       VerticalAlignment="Center"/>
+                        </DockPanel>
+                    </Grid>
+                    <AdornerDecorator>
+                        <ContentPresenter/>
+                    </AdornerDecorator>
+                </DockPanel>
+            </Grid>
+
+            <Grid x:Name="PART_ResizeElements">
+                <i:Interaction.Behaviors>
+                    <b:ResizeWindowPanel/>
+                </i:Interaction.Behaviors>
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Line}">
+                        <Setter Property="Stroke" Value="White"/>
+                        <Setter Property="Opacity" Value="0.01"/>
+                        <Setter Property="StrokeThickness" Value="7"/>
+                        <Setter Property="X1" Value="1"/>
+                        <Setter Property="X2" Value="1"/>
+                        <Setter Property="Y1" Value="1"/>
+                        <Setter Property="Y2" Value="1"/>
+                        <Style.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="VerticalAlignment" Value="Top"/>
+                                    <Condition Property="HorizontalAlignment" Value="Stretch"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="X2" Value="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <Setter Property="Cursor" Value="SizeNS"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="VerticalAlignment" Value="Bottom"/>
+                                    <Condition Property="HorizontalAlignment" Value="Stretch"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="X2" Value="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <Setter Property="Cursor" Value="SizeNS"/>
+                            </MultiTrigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="VerticalAlignment" Value="Stretch"/>
+                                    <Condition Property="HorizontalAlignment" Value="Left"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Y2" Value="{Binding ActualHeight, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <Setter Property="Cursor" Value="SizeWE"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="VerticalAlignment" Value="Stretch"/>
+                                    <Condition Property="HorizontalAlignment" Value="Right"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Y2" Value="{Binding ActualHeight, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <Setter Property="Cursor" Value="SizeWE"/>
+                            </MultiTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+
+                    <Style TargetType="{x:Type Rectangle}">
+                        <Setter Property="Fill" Value="White"/>
+                        <Setter Property="Opacity" Value="0.01"/>
+                        <Setter Property="Width" Value="7"/>
+                        <Setter Property="Height" Value="7"/>
+                        <Style.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="VerticalAlignment" Value="Top"/>
+                                    <Condition Property="HorizontalAlignment" Value="Left"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Cursor" Value="SizeNWSE"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="VerticalAlignment" Value="Bottom"/>
+                                    <Condition Property="HorizontalAlignment" Value="Right"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Cursor" Value="SizeNWSE"/>
+                            </MultiTrigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="VerticalAlignment" Value="Top"/>
+                                    <Condition Property="HorizontalAlignment" Value="Right"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Cursor" Value="SizeNESW"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="VerticalAlignment" Value="Bottom"/>
+                                    <Condition Property="HorizontalAlignment" Value="Left"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Cursor" Value="SizeNESW"/>
+                            </MultiTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+
+                <Line VerticalAlignment="Top">
+                    <Line.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Line.CacheMode>
+                </Line>
+                <Line VerticalAlignment="Bottom">
+                    <Line.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Line.CacheMode>
+                </Line>
+                <Line HorizontalAlignment="Left">
+                    <Line.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Line.CacheMode>
+                </Line>
+                <Line HorizontalAlignment="Right">
+                    <Line.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Line.CacheMode>
+                </Line>
+
+                <Rectangle VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <Rectangle.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Rectangle.CacheMode>
+                </Rectangle>
+                <Rectangle VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <Rectangle.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Rectangle.CacheMode>
+                </Rectangle>
+                <Rectangle VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                    <Rectangle.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Rectangle.CacheMode>
+                </Rectangle>
+                <Rectangle VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                    <Rectangle.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Rectangle.CacheMode>
+                </Rectangle>
+            </Grid>
+        </Grid>
+    </ControlTemplate>
+
+    <Style x:Key="CV19WindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="BorderThickness" Value="7"/>
+        <Setter Property="BorderBrush" Value="DarkBlue"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
+        <Setter Property="Template" Value="{StaticResource CV19WindowTemplate}"/>
+    </Style>
+
+</ResourceDictionary>

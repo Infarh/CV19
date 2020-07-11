@@ -1,21 +1,49 @@
 ﻿<Window x:Class="CV19WPFTest.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CV19WPFTest"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Window.Resources>
-        
-    </Window.Resources>
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:l="clr-namespace:CV19WPFTest"
+        xmlns:b="clr-namespace:CV19WPFTest.Behaviors"
+        Title="MainWindow"
+        Width="354" Height="224">
     <Grid>
-        <Button Content="Button" Height="54" Margin="37,43,589,337" Width="174"/>
-        <TextBox Height="27" Margin="277,56,321,351" Text="TextBox" TextWrapping="Wrap"/>
-        <RadioButton Content="RadioButton" Height="20" Margin="248,114,425,300" Width="127"/>
-        <CheckBox Content="CheckBox" Height="26" Margin="441,117,212,291" Width="147"/>
-        <ProgressBar Height="27" Margin="127,180,471,227" Width="202"/>
-        <Slider Height="31" Margin="104,250,342,153"/>
+        <Button VerticalAlignment="Center" HorizontalAlignment="Center" 
+                Content="Start"
+                Padding="30,20"
+                Click="StartButton_Click">
+            <i:Interaction.Behaviors>
+                <i:MouseDragElementBehavior/>
+            </i:Interaction.Behaviors>
+        </Button>
 
+        <TextBlock Name="ResultBlock" HorizontalAlignment="Center" VerticalAlignment="Top" Text="None">
+            <i:Interaction.Behaviors>
+                <i:MouseDragElementBehavior/>
+            </i:Interaction.Behaviors>
+        </TextBlock>
+
+        <Canvas>
+            <Ellipse Canvas.Left="30" Canvas.Top="10" 
+                     Stroke="Red" StrokeThickness="2"
+                     Fill="DarkBlue"
+                     Width="20" Height="20">
+                <i:Interaction.Behaviors>
+                    <!--<i:MouseDragElementBehavior/>-->
+                    <b:DragInCanvas x:Name="EllipseDragBehavior"/>
+                </i:Interaction.Behaviors>
+            </Ellipse>
+            <Button Canvas.Left="244" Canvas.Top="31" Content="Закрыть">
+                <i:Interaction.Behaviors>
+                    <b:CloseWindow/>
+                </i:Interaction.Behaviors>
+            </Button>
+
+            <TextBlock Canvas.Left="10" Canvas.Top="40"
+                       Text="{Binding PositionX, ElementName=EllipseDragBehavior}"/>
+            <TextBlock Canvas.Left="10" Canvas.Top="60"
+                       Text="{Binding PositionY, ElementName=EllipseDragBehavior}"/>
+        </Canvas>
     </Grid>
 </Window>

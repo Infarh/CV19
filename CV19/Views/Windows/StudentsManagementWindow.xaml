@@ -1,0 +1,118 @@
+﻿<Window x:Class="CV19.Views.Windows.StudentsManagementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
+        xmlns:l="clr-namespace:CV19"
+        xmlns:m="clr-namespace:CV19.Models.Decanat"
+        DataContext="{Binding StudentManagement, Source={StaticResource Locator}}"
+        Title="{Binding Title}"
+        Width="800" Height="450">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" MinWidth="200"/>
+            <ColumnDefinition Width="200" MinWidth="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Grid.Column="0" Header="Группы">
+            <DockPanel>
+                <Button DockPanel.Dock="Bottom" Content="Тестовая кнопка" Margin="5"
+                        Command="{Binding TestCommand}"/>
+                <ListBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}" SelectedIndex="0">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="m:Group">
+                            <DockPanel>
+                                <TextBlock DockPanel.Dock="Right" Text="{Binding Students.Count, StringFormat=({0})}"/>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Header="Студенты">
+            <DockPanel>
+                <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="-3,3">
+                    <Button fa:Awesome.Content="Solid_Plus" Foreground="Green" Padding="0,5" Margin="3,0"
+                            Command="{Binding CreateNewStudentCommand}"
+                            CommandParameter="{Binding SelectedGroup}"/>
+                    <Button fa:Awesome.Content="Solid_UserEdit" Foreground="Blue" Padding="0,5" Margin="3,0"
+                            Command="{Binding EditStudentCommand}"
+                            CommandParameter="{Binding SelectedStudent}"/>
+                </UniformGrid>
+                <ListBox ItemsSource="{Binding SelectedGroup.Students}" SelectedItem="{Binding SelectedStudent}">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="m:Student">
+                            <TextBlock>
+                                <TextBlock.ToolTip>
+                                    <TextBlock>
+                                        Оценка: <TextBlock Text="{Binding Rating}"/>
+                                    </TextBlock>
+                                </TextBlock.ToolTip>
+                                <TextBlock Text="{Binding Surname}"/>
+                                <TextBlock Text="{Binding Name}"/>
+                                <TextBlock Text="{Binding Patronymic}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </GroupBox>
+        <GroupBox Grid.Column="2" Header="Информация" DataContext="{Binding SelectedStudent}">
+            <Grid Margin="3">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <Trigger Property="Grid.Column" Value="0">
+                                <Setter Property="HorizontalAlignment" Value="Right"/>
+                                <Setter Property="Margin" Value="0,0,2,0"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                            <Trigger Property="Grid.Column" Value="1">
+                                <Setter Property="Margin" Value="2,0,0,0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Фамилия:"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Имя:"/>
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Отчество:"/>
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="Рейтинг:"/>
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="Дата рождения:"/>
+
+                <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Surname}"/>
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Name}"/>
+                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Patronymic}"/>
+                <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Rating, StringFormat=0.##}"/>
+                <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Birthday, StringFormat=dd.MM.yyyy}"/>
+
+            </Grid>
+        </GroupBox>
+
+        <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="3"/>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Right" Width="3"/>
+    </Grid>
+</Window>

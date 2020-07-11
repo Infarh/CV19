@@ -1,88 +1,151 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace CV19Console
 {
     class Program
     {
-        private const string data_url = @"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
-
-        private static async Task<Stream> GetDataStream()
-        {
-            var client = new HttpClient();
-            var response = await client.GetAsync(data_url, HttpCompletionOption.ResponseHeadersRead);
-            return await response.Content.ReadAsStreamAsync();
-        }
-
-        private static IEnumerable<string> GetDataLines()
-        {
-            using var data_stream = GetDataStream().Result;
-            using var data_reader = new StreamReader(data_stream);
-
-            while (!data_reader.EndOfStream)
-            {
-                var line = data_reader.ReadLine();
-                if(string.IsNullOrWhiteSpace(line)) continue;
-                yield return line.Replace("Korea,", "Korea -");
-            }
-        }
-
-        private static DateTime[] GetDates() => GetDataLines()
-           .First()
-           .Split(',')
-           .Skip(4)
-           .Select(s => DateTime.Parse(s, CultureInfo.InvariantCulture))
-           .ToArray();
-
-        private static IEnumerable<(string Contry, string Province, int[] Counts)> GetData()
-        {
-            var lines = GetDataLines()
-               .Skip(1)
-               .Select(line => line.Split(','));
-
-            foreach (var row in lines)
-            {
-                var province = row[0].Trim();
-                var country_name = row[1].Trim(' ', '"');
-                var counts = row.Skip(4).Select(int.Parse).ToArray();
-
-                yield return (country_name, province, counts);
-            }
-        }
+        private static bool __ThreadUpdate = true;
 
         static void Main(string[] args)
         {
-            //var web_client = new WebClient();
+            WebServerTest.Run();
+            return;
 
-            //var client = new HttpClient();
+            //Thread.CurrentThread.Name = "Main theread";
 
-            //var items = new string[10];
+            //var clock_thread = new Thread(ThreadMethod);
+            //clock_thread.Name = "Other thread";
+            //clock_thread.IsBackground = true;
+            //clock_thread.Priority = ThreadPriority.AboveNormal;
 
-            //var last_item = items[^1];
-            //var prev_last_item = items[^2];
+            //clock_thread.Start(42);
 
-            //var response = client.GetAsync(data_url).Result;
-            //var csv_str = response.Content.ReadAsStringAsync().Result;
+            //var count = 5;
+            //var msg = "Hello World!";
+            //var timeout = 150;
 
-            //foreach (var data_line in GetDataLines())
-            //    Console.WriteLine(data_line);
+            //new Thread(() => PrintMethod(msg, count, timeout)) { IsBackground = true }.Start();
+            
+            //CheckThread();
 
-            //var dates = GetDates();
+            //for (var i = 0; i < 5; i++)
+            //{
+            //    Thread.Sleep(100);
+            //    Console.WriteLine(i);
+            //}
 
-            //Console.WriteLine(string.Join("\r\n", dates));
+            //var values = new List<int>();
 
-            var russia_data = GetData()
-               .First(v => v.Contry.Equals("Russia", StringComparison.OrdinalIgnoreCase));
+            //var threads = new Thread[10];
+            //object lock_object = new object();
+            //for (var i = 0; i < threads.Length; i++)
+            //    threads[i] = new Thread(() =>
+            //    {
+            //        for (var j = 0; j < 10; j++)
+            //        {
+            //            lock (lock_object)
+            //                values.Add(Thread.CurrentThread.ManagedThreadId);
+            //            Thread.Sleep(1);
+            //        }
+            //    });
 
-            Console.WriteLine(string.Join("\r\n", GetDates().Zip(russia_data.Counts, (date, count) => $"{date:dd:MM} - {count}")));
+            //Monitor.Enter(lock_object);
+            //try
+            //{
+                
+            //}
+            //finally
+            //{
+            //    Monitor.Exit(lock_object);
+            //}
 
+            //foreach (var thread in threads)
+            //    thread.Start();
+
+
+            //if (!clock_thread.Join(100))
+            //{
+            //    //clock_thread.Abort();     // Прерывает поток в любой точке процесса его выполнения
+            //    clock_thread.Interrupt();
+            //}
+
+            //Mutex mutex = new Mutex();
+            //Semaphore semaphore = new Semaphore(0, 10);
+            //semaphore.WaitOne();
+
+            // действия в крит.секции
+
+            //semaphore.Release();
+
+            ManualResetEvent manual_reset_event = new ManualResetEvent(false);
+            AutoResetEvent auto_reset_event = new AutoResetEvent(false);
+
+            EventWaitHandle thread_guidance = auto_reset_event;
+
+            var test_threads = new Thread[10];
+            for (var i = 0; i < test_threads.Length; i++)
+            {
+                var local_i = i;
+                test_threads[i] = new Thread(() =>
+                {
+                    Console.WriteLine("Поток id:{0} - стартовал", Thread.CurrentThread.ManagedThreadId);
+
+                    thread_guidance.WaitOne();
+
+                    Console.WriteLine("Value:{0}", local_i);
+                    Console.WriteLine("Поток id:{0} - завершился", Thread.CurrentThread.ManagedThreadId);
+                    //thread_guidance.Set();
+                });
+                test_threads[i].Start();
+            }
+
+            Console.WriteLine("Готов к запуску потоков");
+            Console.ReadLine();
+
+            thread_guidance.Set();
+            thread_guidance.Reset();
+
+            //Console.ReadLine();
+            //Console.WriteLine(string.Join(",", values));
 
             Console.ReadLine();
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        private static void PrintMethod(string Message, int Count, int Timeout)
+        {
+            for (var i = 0; i < Count; i++)
+            {
+                Console.WriteLine(Message);
+                Thread.Sleep(Timeout);
+            }
+        }
+
+        private static void ThreadMethod(object parameter)
+        {
+            var value = (int)parameter;
+            Console.WriteLine(value);
+
+            CheckThread();
+
+            while (__ThreadUpdate)
+            {
+                Thread.Sleep(100);
+                Thread.SpinWait(1000);
+                Console.Title = DateTime.Now.ToString();
+            }
+        }
+
+        private static void CheckThread()
+        {
+            var thread = Thread.CurrentThread;
+            Console.WriteLine("id:{0} - {1}", thread.ManagedThreadId, thread.Name);
         }
     }
 }

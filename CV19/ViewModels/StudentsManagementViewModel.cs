@@ -33,7 +33,15 @@ namespace CV19.ViewModels
 
         #endregion
 
+        #region SelectedStudent : Student - Выбранный студент
 
+        /// <summary>Выбранный студент</summary>
+        private Student _SelectedStudent;
+
+        /// <summary>Выбранный студент</summary>
+        public Student SelectedStudent { get => _SelectedStudent; set => Set(ref _SelectedStudent, value); }
+
+        #endregion
 
         public StudentsManagementViewModel(StudentsManager StudentsManager) => _StudentsManager = StudentsManager;
     }

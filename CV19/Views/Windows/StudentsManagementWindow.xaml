@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:l="clr-namespace:CV19"
+        xmlns:m="clr-namespace:CV19.Models.Decanat"
         DataContext="{Binding StudentManagement, Source={StaticResource Locator}}"
         Title="{Binding Title}"
         Width="800" Height="450">
@@ -14,10 +15,44 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <GroupBox Grid.Column="0" Header="Группы">
-            <ListBox/>
+            <ListBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}" SelectedIndex="0">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="m:Group">
+                        <DockPanel>
+                            <TextBlock DockPanel.Dock="Right" Text="{Binding Students.Count, StringFormat=({0})}"/>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </GroupBox>
         <GroupBox Grid.Column="1" Header="Студенты">
-            <ListBox/>
+            <ListBox ItemsSource="{Binding SelectedGroup.Students}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="m:Student">
+                        <TextBlock>
+                            <TextBlock.ToolTip>
+                                <TextBlock>
+                                    Оценка: <TextBlock Text="{Binding Rating}"/>
+                                </TextBlock>
+                            </TextBlock.ToolTip>
+                            <TextBlock Text="{Binding Surname}"/>
+                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text="{Binding Patronymic}"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </GroupBox>
         <GroupBox Grid.Column="2" Header="Информация"></GroupBox>
 

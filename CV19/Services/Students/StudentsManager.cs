@@ -20,6 +20,22 @@ namespace CV19.Services.Students
             _Groups = Groups;
         }
 
+        public bool Create(Student Student, string GroupName)
+        {
+            if (Student is null) throw new ArgumentNullException(nameof(Student));
+            if(string.IsNullOrWhiteSpace(GroupName)) throw new ArgumentException("Некорректное имя группы", nameof(GroupName));
 
+            var group = _Groups.Get(GroupName);
+            if (group is null)
+            {
+                group = new Group { Name = GroupName };
+                _Groups.Add(group);
+            }
+            group.Students.Add(Student);
+            _Students.Add(Student);
+            return true;
+        }
+
+        public void Update(Student Student) => _Students.Update(Student.Id, Student);
     }
 }

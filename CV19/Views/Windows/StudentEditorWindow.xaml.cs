@@ -8,13 +8,14 @@ namespace CV19.Views.Windows
     {
         #region FirstName
 
-        public static DependencyProperty FirstNameProperty = DependencyProperty.Register(
-              nameof(FirstName),
-              typeof(string),
-              typeof(StudentsManagementWindow),
-              new PropertyMetadata(null));
+        public static readonly DependencyProperty FirstNameProperty = 
+            DependencyProperty.Register(
+                nameof(FirstName),
+                typeof(string),
+                typeof(StudentEditorWindow),
+                new PropertyMetadata(null));
 
-        public string FirstName { get; set; } 
+        public string FirstName { get => (string)GetValue(FirstNameProperty); set => SetValue(FirstNameProperty, value); } 
 
         #endregion
 

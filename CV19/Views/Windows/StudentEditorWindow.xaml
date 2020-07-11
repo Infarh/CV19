@@ -9,8 +9,7 @@
         Width="350" Height="234"
         DataContext="{Binding RelativeSource={RelativeSource Self}}" 
         ResizeMode="NoResize" 
-        ShowInTaskbar="False" 
-        WindowStyle="ToolWindow">
+        ShowInTaskbar="False">
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,7,0,0" 
                    Text="Редактирование студента"

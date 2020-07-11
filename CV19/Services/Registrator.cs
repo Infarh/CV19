@@ -1,4 +1,5 @@
 ﻿using CV19.Services.Interfaces;
+using CV19.Services.Students;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CV19.Services
@@ -13,6 +14,12 @@ namespace CV19.Services
 
             services.AddTransient<IAsyncDataService, AsyncDataService>();
             services.AddTransient<IWebServerService, HttpListenerWebSeverer>();
+
+            services.AddSingleton<StudentsRepository>();
+            services.AddSingleton<GroupsRepository>();
+            services.AddSingleton<StudentsManager>();
+
+            services.AddTransient<IUserDialogService, WindowsUserDialogService>();
 
             return services;
         }

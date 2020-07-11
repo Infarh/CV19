@@ -83,19 +83,31 @@
                                     <i:Interaction.Behaviors>
                                         <b:MinimizeWindow/>
                                     </i:Interaction.Behaviors>
-                                    <Path Data="{StaticResource MinimizeButtonIconGeometry}"/>
+                                    <Path Data="{StaticResource MinimizeButtonIconGeometry}">
+                                        <Path.CacheMode>
+                                            <BitmapCache SnapsToDevicePixels="True"/>
+                                        </Path.CacheMode>
+                                    </Path>
                                 </Button>
                                 <Button>
                                     <i:Interaction.Behaviors>
                                         <b:WindowStateChange/>
                                     </i:Interaction.Behaviors>
-                                    <Path Data="{StaticResource MaximizeToMaxButtonIconGeometry}"/>
+                                    <Path Data="{StaticResource MaximizeToMaxButtonIconGeometry}">
+                                        <Path.CacheMode>
+                                            <BitmapCache SnapsToDevicePixels="True"/>
+                                        </Path.CacheMode>
+                                    </Path>
                                 </Button>
                                 <Button Foreground="Red">
                                     <i:Interaction.Behaviors>
                                         <b:CloseWindow/>
                                     </i:Interaction.Behaviors>
-                                    <Path Data="{StaticResource CloseButtonIconGeometry}"/>
+                                    <Path Data="{StaticResource CloseButtonIconGeometry}">
+                                        <Path.CacheMode>
+                                            <BitmapCache SnapsToDevicePixels="True"/>
+                                        </Path.CacheMode>
+                                    </Path>
                                 </Button>
                             </StackPanel>
 
@@ -204,15 +216,47 @@
                     </Style>
                 </Grid.Resources>
 
-                <Line VerticalAlignment="Top"/>
-                <Line VerticalAlignment="Bottom"/>
-                <Line HorizontalAlignment="Left"/>
-                <Line HorizontalAlignment="Right"/>
+                <Line VerticalAlignment="Top">
+                    <Line.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Line.CacheMode>
+                </Line>
+                <Line VerticalAlignment="Bottom">
+                    <Line.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Line.CacheMode>
+                </Line>
+                <Line HorizontalAlignment="Left">
+                    <Line.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Line.CacheMode>
+                </Line>
+                <Line HorizontalAlignment="Right">
+                    <Line.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Line.CacheMode>
+                </Line>
 
-                <Rectangle VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                <Rectangle VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                <Rectangle VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                <Rectangle VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                <Rectangle VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <Rectangle.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Rectangle.CacheMode>
+                </Rectangle>
+                <Rectangle VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <Rectangle.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Rectangle.CacheMode>
+                </Rectangle>
+                <Rectangle VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                    <Rectangle.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Rectangle.CacheMode>
+                </Rectangle>
+                <Rectangle VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                    <Rectangle.CacheMode>
+                        <BitmapCache SnapsToDevicePixels="True"/>
+                    </Rectangle.CacheMode>
+                </Rectangle>
             </Grid>
         </Grid>
     </ControlTemplate>

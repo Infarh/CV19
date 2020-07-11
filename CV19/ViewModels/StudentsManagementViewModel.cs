@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Input;
 using CV19.Infrastructure.Commands;
 using CV19.Models.Decanat;
 using CV19.Services.Students;
 using CV19.ViewModels.Base;
+using CV19.Views.Windows;
 
 namespace CV19.ViewModels
 {
@@ -60,7 +62,20 @@ namespace CV19.ViewModels
         {
             var student = (Student)p;
 
+            var dlg = new StudentEditorWindow
+            {
+                FirstName = student.Name,
+                LastName = student.Surname,
+                Patronymic = student.Patronymic,
+                Rating = student.Rating,
+                Birthday = student.Birthday
+            };
 
+
+            if (dlg.ShowDialog() == true)
+                MessageBox.Show("Пользователь выполнил редактирование");
+            else
+                MessageBox.Show("Пользователь отказался");
         }
 
         #endregion
